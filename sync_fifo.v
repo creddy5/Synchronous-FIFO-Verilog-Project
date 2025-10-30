@@ -35,21 +35,11 @@ module sync_fifo #(
     output wire                   EMPTY      // FIFO Empty Flag
 );
 
-    // ===========================================================
-    // Internal memory declaration
-    // ===========================================================
     reg [DATA_WIDTH-1:0] MEM [0:FIFO_DEPTH-1];
-
-    // ===========================================================
-    // Read and Write Pointers
-    // One extra bit for full/empty distinction
-    // ===========================================================
     reg [ADDR_WIDTH:0] W_PTR;
     reg [ADDR_WIDTH:0] R_PTR;
 
-    // ===========================================================
     // Write Operation
-    // ===========================================================
     always @(posedge CLK or posedge RST) begin
         if (RST) begin
             W_PTR <= 0;
@@ -59,9 +49,7 @@ module sync_fifo #(
         end
     end
 
-    // ===========================================================
     // Read Operation
-    // ===========================================================
     always @(posedge CLK or posedge RST) begin
         if (RST) begin
             R_PTR <= 0;
@@ -72,9 +60,7 @@ module sync_fifo #(
         end
     end
 
-    // ===========================================================
     // Status Flag Logic
-    // ===========================================================
     // FIFO is empty when both pointers are equal
     assign EMPTY = (W_PTR == R_PTR);
 
